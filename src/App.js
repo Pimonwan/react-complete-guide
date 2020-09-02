@@ -1,3 +1,87 @@
+
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person.js';
+
+class App extends Component {
+  // state is variables in class
+  state = {
+    persons: [
+      {name: 'Max', age: 28},
+      {name: 'Manu', age: 29},
+      {name: 'Stephanie', age: 26}
+    ]
+  }
+
+  switchNameHandler = (newName) => {
+    //Don't do this ---> this.state.persons[0].name = 'Maximilian';
+
+    // setState allows us to update state property
+    // get attribute type object
+    this.setState({
+      persons: [
+      {name: newName, age: 28},
+      {name: 'Manu', age: 29},
+      {name: 'Stephanie', age: 27}
+    ],
+    showPersons: false
+    })
+  }
+
+  nameChangeHandler = (event) => {
+    this.setState({
+      persons: [
+      {name: 'Max', age: 28},
+      {name: event.target.value, age: 29},
+      {name: 'Stephanie', age: 26}
+    ]
+    })
+  }
+
+  togglePersonHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({showPersons: !doesShow});
+  }
+  // use bind is better!
+  render(){
+    const style = {
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1x solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+    };
+
+  return (
+    <div className="App">
+      <h1>Hi I'm a React App </h1>
+      <p> This is really working!!</p>
+        <button 
+        style={style}
+        onClick={() => this.togglePersonHandler()}>Toggle Persons</button>
+        {
+          this.state.showPersons ?
+            <div>
+              <Person 
+                name={this.state.persons[0].name} 
+                age={this.state.persons[0].age}/>
+              <Person 
+                name={this.state.persons[1].name} 
+                age={this.state.persons[1].age}
+                click={this.switchNameHandler.bind(this, 'Max!!!')}
+                changed={this.nameChangeHandler}>My Hobbies: Racing</Person>
+              <Person 
+                name={this.state.persons[2].name} 
+                age={this.state.persons[2].age}/>
+            </div> : null
+        }
+    </div>
+    );
+  }
+}
+
+export default App;
+
   /* useState is the hook that allows us to manage state in a functional
    - useState can pass all types like objects, numbers, strings etc.
    - useState always return 2 arrays 
@@ -28,76 +112,14 @@
     ** setState function will merge data between old state and new state so state will not lost
   */
 
-import React, { Component } from 'react';
-import './App.css';
-import Person from './Person/Person.js';
+/* 
+  In jsx we can write javascript code in {} in render function.
+  additional we can write element {<div>...</div>}
 
-class App extends Component {
-  // state is variables in class
-  state = {
-    persons: [
-      {name: 'Max', age: 28},
-      {name: 'Manu', age: 29},
-      {name: 'Stephanie', age: 26}
-    ]
-  }
-
-  switchNameHandler = (newName) => {
-    //Don't do this ---> this.state.persons[0].name = 'Maximilian';
-
-    // setState allows us to update state property
-    // get attribute type object
-    this.setState({
-      persons: [
-      {name: newName, age: 28},
-      {name: 'Manu', age: 29},
-      {name: 'Stephanie', age: 27}
-    ]
-    })
-  }
-
-  nameChangeHandler = (event) => {
-    this.setState({
-      persons: [
-      {name: 'Max', age: 28},
-      {name: event.target.value, age: 29},
-      {name: 'Stephanie', age: 26}
-    ]
-    })
-  }
-
-  // use bind is better!
-  render(){
-    const style = {
-      backgroundColor: 'white',
-      font: 'inherit',
-      border: '1x solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
-
-  return (
-    <div className="App">
-      <h1>Hi I'm a React App </h1>
-      <p> This is really working!!</p>
-        <button 
-        style={style}
-        onClick={() => this.switchNameHandler('Maximilion')}>Switch Name</button>
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age}/>
-        <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this, 'Max!!!')}
-          changed={this.nameChangeHandler}>My Hobbies: Racing</Person>
-        <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age}/>
-    </div>
-    );
-  }
-}
-
-export default App;
-
+        {
+          this.state.showPersons ?       -----> check if showPersons is true will render <div>
+            <div>
+              ...
+            </div> : null    -----> this is else case
+        }
+ */
