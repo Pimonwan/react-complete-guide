@@ -6,35 +6,47 @@ class App extends Component {
   // state is variables in class
   state = {
     persons: [
-      { name: "Max", age: 28 },
-      { name: "Manu", age: 29 },
-      { name: "Stephanie", age: 26 },
+      { id: 0, name: "Max", age: 28 },
+      { id: 1, name: "Manu", age: 29 },
+      { id: 2, name: "Stephanie", age: 26 },
     ],
   };
 
-  switchNameHandler = (newName) => {
-    //Don't do this ---> this.state.persons[0].name = 'Maximilian';
-
-    // setState allows us to update state property
-    // get attribute type object
-    this.setState({
-      persons: [
-        { name: newName, age: 28 },
-        { name: "Manu", age: 29 },
-        { name: "Stephanie", age: 27 },
-      ],
-      showPersons: false,
+  nameChangeHandler = (event , id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
     });
+
+    // create new obj that look like state person
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+    // or using
+    // const person = Object.assign(newEmptyObj, value inside);
+    // const person = Object.assign({}, this.state.persons[personIndex]);
+
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+    this.setState({persons: persons});
   };
 
-  nameChangeHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: "Max", age: 28 },
-        { name: event.target.value, age: 29 },
-        { name: "Stephanie", age: 26 },
-      ],
-    });
+  // splice() function use for delete element array by index 
+  deletePersonHandler = (personIndex) => {
+    // we shouldn't fix state directly, because it may has mistake
+    // we should create new array that look like array in state
+    // by using slice() 
+    // const persons = this.state.persons.slice();    -----> old jvs
+    // ================================//
+    // const persons = this.state.persons;   ----> it work but not good
+    // ================================//
+    // spread element (ES6)
+    const persons = [...this.state.persons];
+
+    //remove person from array
+    persons.splice(personIndex, 1);
+    // and update state
+    this.setState({persons: persons})
   };
 
   togglePersonHandler = () => {
@@ -56,22 +68,14 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-          />
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            click={this.switchNameHandler.bind(this, "Max!!!")}
-            changed={this.nameChangeHandler}
-          >
-            My Hobbies: Racing
-          </Person>
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age}
-          />
+          {this.state.persons.map((person, index) => {
+            return <Person
+            click={() => this.deletePersonHandler(index)}
+            name={person.name}
+            age={person.age} 
+            key={person.id}
+            changed={(event) => this.nameChangeHandler(event, person.id)}/>
+          })}
         </div>
       );
     }
