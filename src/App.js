@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import Radium from 'radium';
+import Radium, { StyleRoot } from "radium";
 import Person from "./Person/Person.js";
-
 
 class App extends Component {
   // state is variables in class
@@ -64,10 +63,10 @@ class App extends Component {
       border: "1x solid blue",
       padding: "8px",
       cursor: "pointer",
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
+      ":hover": {
+        backgroundColor: "lightgreen",
+        color: "black",
+      },
     };
 
     let persons = null;
@@ -90,31 +89,34 @@ class App extends Component {
       );
       //change button color to red
       style.backgroundColor = "red";
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
+      style[":hover"] = {
+        backgroundColor: "salmon",
+        color: "black",
+      };
     }
 
     // Dynamic styles
     // let classes = ["red", "bold"].join(" "); // ----> result will be "red bold"
     let classes = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red'); // classes = ['red']
+      classes.push("red"); // classes = ['red']
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold'); // classes = ['red', 'bold' ]
+      classes.push("bold"); // classes = ['red', 'bold' ]
     }
 
+/* If use Media Queries (Radium) must use <StyleRoot> to wrap entire application in the root app */
     return (
-      <div className="App">
-        <h1>Hi I'm a React App </h1>
-        <p className={classes.join(' ')}> This is really working!!</p>
-        <button style={style} onClick={() => this.togglePersonHandler()}>
-          Toggle Persons
-        </button>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi I'm a React App </h1>
+          <p className={classes.join(" ")}> This is really working!!</p>
+          <button style={style} onClick={() => this.togglePersonHandler()}>
+            Toggle Persons
+          </button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   }
 }
