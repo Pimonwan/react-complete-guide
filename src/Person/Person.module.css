@@ -1,13 +1,17 @@
 .Person {
-    width: 60%;
-    margin: 16px auto;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
-    padding: 16px;
-    text-align: center;
+  width: 60%;
+  margin: 16px auto;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 3px #ccc;
+  padding: 16px;
+  text-align: center;
 }
 
-
+@media (min-width: 500px) {
+  .Person {
+    width: 450px;
+  }
+}
 
 /* margin
       The CSS margin properties are used to create space around elements, 
@@ -40,7 +44,7 @@
     
     * The auto value
         You can set the margin property to auto to horizontally center the element within its container.
-*/ 
+*/
 
 /* padding
         The CSS padding properties are used to generate space around an element's content,
