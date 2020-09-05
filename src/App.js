@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import classes from "./App.module.css";
 import Radium, { StyleRoot } from "radium";
 import Person from "./Person/Person.js";
 
@@ -105,10 +105,10 @@ class App extends Component {
       classes.push("bold"); // classes = ['red', 'bold' ]
     }
 
-/* If use Media Queries (Radium) must use <StyleRoot> to wrap entire application in the root app */
+    /* If use Media Queries (Radium) must use <StyleRoot> to wrap entire application in the root app */
     return (
       <StyleRoot>
-        <div className="App">
+        <div className={classes.App}>
           <h1>Hi I'm a React App </h1>
           <p className={classes.join(" ")}> This is really working!!</p>
           <button style={style} onClick={() => this.togglePersonHandler()}>
