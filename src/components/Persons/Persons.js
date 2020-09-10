@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import Person from "./Person/Person";
 
-class Persons extends Component {
+class Persons extends PureComponent {
   // static getDerivedStateFromProps(props, state) {
   //     console.log('[Persons.js] getDerivedStateFromProps');
   //     return state;
@@ -11,14 +11,27 @@ class Persons extends Component {
   //     console.log('[Persons.js] componentWillReceiveProps', props);
   // }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    /* have to return true or faluse 
-           if true -> react should continue updateing
-           if faluse -> it shouldn't
-        */
-    console.log("[Persons.js] shouldComponentUpdate");
-    return true;
-  }
+  // -------------------------------------------------//
+  // if not use shouldComponentUpdate can use purecomponent instaed.Person
+  // it will check all check like we handle in shouldComponentUpdate
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   /* have to return true or faluse 
+  //          if true -> react should continue updateing
+  //          if faluse -> it shouldn't
+  //       */
+
+  //       // if person doesn't change it no need to rerender again
+  //   console.log("[Persons.js] shouldComponentUpdate");
+  //   if (nextProps.persons !== this.props.persons 
+  //     || nextProps.changed !== this.props.changed 
+  //     || nextProps.clicked !== this.props.clicked
+  //   ) {
+  //     return true;
+  //   }else {
+  //     return false;
+  //   }
+  // }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log("[Persons.js] getSnapshotBeforeUpdate");
