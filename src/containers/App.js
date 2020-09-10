@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import classes from "./App.module.css";
-import Person from "../components/Persons/Person/Person.js";
 import Persons from "../components/Persons/Persons.js";
 import Cockpit from "../components/Cockpit/Cockpit.js";
 class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log('[App.js] constructor')
+  }
+
+
   state = {
     persons: [
       { id: 0, name: "Max", age: 28 },
@@ -12,6 +17,31 @@ class App extends Component {
     ],
     showPersons: false
   };
+
+  // static getDerivedStateFromProps(props, state) {
+  //   console.log('[App.js] getDerivedStateFromProps(props, state)');
+  //   return state;
+  // }
+
+  // componentWillMount() {
+  //   console.log('[App.js] componentWillMount()');
+  // }
+
+  componentDidMount() {
+    // fetching new data from server
+    console.log('[App.js] componentDidMount()');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate()');
+    // if falue it will not be update when rendered
+    return true;
+  }
+
+  componentDidUpdate() {
+    // fetching new data from server
+    console.log('[App.js] componentDidUpdate()');
+  }
 
   nameChangeHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex((p) => {
@@ -38,6 +68,7 @@ class App extends Component {
     this.setState({ showPersons: !doesShow });
   };
   render() {
+    console.log('[App.js] render')
     let persons = null;
 
     if (this.state.showPersons) {
@@ -53,6 +84,7 @@ class App extends Component {
     return (
       <div className={classes.App}>
         <Cockpit
+          title={this.props.appTitle}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonHandler}/>
@@ -63,3 +95,25 @@ class App extends Component {
 }
 
 export default App;
+
+/* 
+ Component Lifecycle - Creation
+ จะได้แค่เฉพาะ  class base เท่านั้น
+    - constructor(props) 
+      -> Call super(props)
+      -> Do: Set state
+    
+    - getDerivedStateFromProps(props, state)
+      -> Sync state
+    
+    - render()
+      -> prepare & structure your jsx code เป็นส่วยเตรียมการแสดงผล
+    
+    - Render Child Components
+      -> ส่วนที่จะ render component ขึ้นมา
+    
+    - componentDidMount()
+      -> จะติดต่อกับ http
+      -> ไม่ควรอัพเดต state ที่ขึ้นนี้
+
+*/
