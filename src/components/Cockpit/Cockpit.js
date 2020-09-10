@@ -6,15 +6,25 @@ const Cockpit = (props) => {
   // useEffect if array is [] it will run 1 times after rendering
   // [props.Person] it will run when persons have changed.
   // if need componentDidMount, you would use useEffect with an empty array passed as a second.
+
+
+  // ***  cleanup work in useEffect  ---> run BEFORE the main useEffect function runs, but AFTER the first render cycle
   useEffect(() => {
     console.log('[Cockpit.js] useEffect');
     //HTTP Request... 
     setTimeout(() => {
       alert('Save data to cloud!!')
     }, 1000);
-  }, [props.persons]);
+    return () => {
+      console.log('[Cockpit.js] cleanup work in useEffect');
+    }}, []);
 
-
+  useEffect(() => {
+    console.log('[Cockpit.js] 2nd useEffect');
+    return () => {
+      console.log('[Cockpit.js] cleanup work in 2nd useEffect');
+    };
+  })
 
   const assignedClasses = [];
   let btnClasses = "";
